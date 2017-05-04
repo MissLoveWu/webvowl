@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="js/d3.min.js"></script>
+    <title>d3 test</title>
+  </head>
+  <body>
+    <div id="svg-content">
+      <p>Hello World 1</p>
+      <p>Hello World 2</p>
+    </div>
+
+    <script>
+      var dataset = ["I like dog","I like cat","I like snake"];
+      var str = 'test'
+      var content = d3.select("#svg-content")
+      content.selectAll("p")
+             .data(dataset)  //数组
+             //.datum(str) //数据
+             .text(function(d, i){
+                  return "第 "+ i + " 个元素绑定的数据是 " + d;
+             })
+
+      content.append("svg")
+    </script>
+  </body>
+</html>
