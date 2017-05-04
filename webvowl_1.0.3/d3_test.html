@@ -23,6 +23,25 @@
              })
 
       content.append("svg")
+             .attr("width",500)
+             .attr("height",250)
+      var Tsvg = content.select("svg")
+      Tsvg.append("g")
+          .attr("transform","translate(50,30)")
+
+
+      var g = Tsvg.select("g")
+      var data = [1,12,161,54,14,54,87,23]
+
+      var line_generator = d3.content.line()
+      .x(function(d,i){
+        return i
+      })
+      .y(function(d,i){
+        return d
+      })
+      g.append("path")
+       .attr("d",line_generator)
     </script>
   </body>
 </html>
