@@ -2,33 +2,41 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" charset="utf-8"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="d3.v4.min.js"></script>
     <title>d3散点图布局</title>
     <style>
-.content{
-  width: 960px;
-  height: 600px;
-  background: #ddd;
-}
-.links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
-}
+    #svg-content{
+      width: 960px;
+      height: 600px;
+      background: #ddd;
+    }
+    .links line {
+      stroke: #999;
+      stroke-opacity: 0.6;
+    }
 
-.nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
+    .nodes circle {
+      stroke: #fff;
+      stroke-width: 1.5px;
+    }
 
 </style>
   </head>
   <body>
-    <div class="content">
+    <div id="svg-content">
       <svg width="960" height="600">
 
       </svg>
     </div>
-
+    <li id="export" style="display: block;"><a href="#">Export</a>
+        <ul class="toolTipMenu export">
+            <li><a href="#" download="" id="exportJson">Export as JSON</a></li>
+            <li><a href="#" download="" id="exportSvg">Export as SVG</a></li>
+        </ul>
+    </li>
     <script src="app.js" charset="utf-8"></script>
+    <script src="export.js" charset="utf-8"></script>
   </body>
 </html>

@@ -3,6 +3,20 @@ var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
 
+
+
+//定义缩放
+var zoom = d3.behavior.zoom()
+            .scaleExtent([1, 10])
+            .on("zoom", zoomed);
+
+function zoomed() {
+    svg_container.attr("transform",
+        "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
+var svg_container = svg.append("g").call(zoom);
+
+
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
 var simulation = d3.forceSimulation()
@@ -10,27 +24,36 @@ var simulation = d3.forceSimulation()
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2));
 
+
+// 数据导入 callback
 d3.json("test.json", function(error, graph) {
   if (error) throw error;
-
-  var link = svg.append("g")
-      .attr("class", "links")
+  window.jsondata = graph
+//添加连线
+  var link = svg_container.append("g")
+    .attr("class", "links")
     .selectAll("line")
     .data(graph.links)
     .enter().append("line")
       .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
-  var node = svg.append("g")
+//添加节点
+  var node = svg_container.append("g")
       .attr("class", "nodes")
-    .selectAll("circle")
+    .selectAll("g")
     .data(graph.nodes)
-    .enter().append("circle")
-      .attr("r", 5)
+    .enter()
+    .append("g")
+    .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended));
+
+
+  node.append("circle")
+      .attr("r", 10)  //半径
       .attr("fill", function(d) { return color(d.group); })
-      .call(d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended));
+
 
   node.append("title")
       .text(function(d) { return d.id; });
@@ -51,8 +74,11 @@ d3.json("test.json", function(error, graph) {
         .attr("y2", function(d) { return d.target.y; });
 
     node
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
+        // .attr("cx", function(d) { return d.x; })
+        // .attr("cy", function(d) { return d.y; });
+        .attr("transform",function(d){
+          return "translate("+d.x+","+d.y+")"
+        })
   }
 });
 
