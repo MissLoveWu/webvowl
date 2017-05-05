@@ -28,7 +28,7 @@ var simulation = d3.forceSimulation()
 // 数据导入 callback
 d3.json("test.json", function(error, graph) {
   if (error) throw error;
-  window.jsondata = graph
+  //window.jsondata = graph
 //添加连线
   var link = svg_container.append("g")
     .attr("class", "links")
