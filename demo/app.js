@@ -3,22 +3,29 @@ var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
 
+    console.log(svg)
 
 
 //定义缩放
-var zoom = d3.behavior.zoom()
-            .scaleExtent([1, 10])
-            .on("zoom", zoomed);
+var zoom = d3.zoom()
+        .scaleExtent([0.5, 5])
+				.on("zoom",zoomed);
 
 function zoomed() {
     svg_container.attr("transform",
-        "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        "translate(" + d3.event.transform.x+","+d3.event.transform.y+ ")scale(" + d3.event.transform.k+","+d3.event.transform.k+ ")");
 }
-var svg_container = svg.append("g").call(zoom);
+var svg_container = svg.append("g")
+    svg.call(zoom);
 
 
 var color = d3.scaleOrdinal(d3.schemeCategory20);
 
+
+/*
+  仿真系统设置力的作用
+  https://github.com/xswei/d3js_doc/tree/master/API/d3-force-master
+*/
 var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
     .force("charge", d3.forceManyBody())
@@ -51,11 +58,12 @@ d3.json("test.json", function(error, graph) {
 
 
   node.append("circle")
-      .attr("r", 10)  //半径
+      .attr("r", 5)  //半径
       .attr("fill", function(d) { return color(d.group); })
 
 
-  node.append("title")
+  node.append("text").attr("class", "text")
+      .append("tspan").attr("class", "text")
       .text(function(d) { return d.id; });
 
   simulation

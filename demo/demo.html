@@ -3,29 +3,28 @@
   <head>
     <meta charset="utf-8">
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" charset="utf-8"></script>
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="d3.v4.min.js"></script>
     <title>d3散点图布局</title>
     <style>
-    #svg-content{
-      width: 960px;
-      height: 600px;
-      background: #ddd;
+    .class, .fineline, line, path {
+        stroke: #666;
+        /*stroke-dasharray:2;*/
     }
-    .links line {
-      stroke: #999;
-      stroke-opacity: 0.6;
+    .class, line, path {
+        stroke-width: 2;
     }
-
     .nodes circle {
       stroke: #fff;
       stroke-width: 1.5px;
     }
-
+    .text {
+        font-family: Helvetica,Arial,sans-serif;
+        font-size: 12px;
+    }
 </style>
   </head>
   <body>
-    <div id="svg-content">
+    <div id="svg-content" style="width:960px;height:600px;background:#ecf0f1;">
       <svg width="960" height="600">
 
       </svg>
